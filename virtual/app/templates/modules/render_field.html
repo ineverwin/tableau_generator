@@ -1,0 +1,49 @@
+{% macro render_field(field) %}
+<div class="form-group">
+    <label for="{{ field.name }}" class="col control-label">{{ field.label.text }}</label>
+    <div class="col">
+        {{ field(class_='form-control', **kwargs)|safe }}
+        <ul>
+        {% for error in field.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_fieldlist(field,name) %}
+<div class="form-group">
+    <label for="{{ field.name }}" class="col control-label">{{name}}</label>
+    {% for i in field %}
+        <div class="col">
+            {{ i(class_='form-control', **kwargs)|safe }}
+            <ul>
+            {% for error in i.errors %}
+                <li class="error">{{ error }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_radio_fields(field) %}
+<div class="form-group">
+    <label class="col control-label">{{ field.label.text }}</label>
+    <div class="col">
+    {% for subfield in field %}
+    <div class="radio">
+        <label>
+            {{ subfield }}
+            {{ subfield.label.text }}
+        </label>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_submit(field) %}
+<input  class="btn btn-dark" id="{{field.id}}" name="{{field.name}}" type="submit" value="{{field.label.text}}">
+{% endmacro %}

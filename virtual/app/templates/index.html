@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %} 
+
+
+{% block content %}
+
+    <div class="container">
+        <h1><a href="{{url_for('upload',templateName='timeseries')}}">Time Series Template</a></h1>
+        
+        <h1><a href="{{url_for('upload',templateName='marimekko')}}">Marimekko</a></h1>
+    </div>
+
+{% endblock %}    

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% from "modules/render_field.html" import render_field,render_submit,render_fieldlist %}
+
+{% block title %}
+    Customize Tableau Workbook
+{% endblock %} 
+
+
+{% block content %}
+    <div class="container formWrapper">
+
+    <form method=POST action="{{ url_for('timeseries') }}">
+        {{ form.csrf_token }}
+
+        {{ render_field(form.df_name) }}
+        {{ render_field(form.df_title) }}
+        {{ render_field(form.df_date) }}
+        <div class="row">
+            <div class="col-sm">      
+                {{ render_fieldlist(form.df_number,'Calculation Field')}}
+            </div>
+            <div class="col-sm">
+                {{ render_fieldlist(form.df_string,'Stackbar Field')}}
+            </div>
+        </div>
+
+        {{ render_field(form.df_currency) }}
+       
+        {{ render_submit(form.submit) }}
+    </form>
+    </div>
+{% endblock %}    

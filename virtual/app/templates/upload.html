@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% from "modules/render_field.html" import render_field,render_submit %}
+
+{% block title %}
+    Tableau Time Series Workbook Creator
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="container">
+    
+        <h1>Upload an Excel file for {{templateName}}</h1>
+        <hr>
+  
+        <form method="POST"  enctype="multipart/form-data">
+          {{ form.csrf_token }}
+          {{ render_field(form.fileData) }}
+          {{ render_submit(form.submitFile) }}
+      </form>
+
+  </div>
+{% endblock %}    

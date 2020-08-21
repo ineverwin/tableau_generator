@@ -1,0 +1,286 @@
+Old stuff
+
+if request.method == 'POST':
+        f = request.form['csvfile']
+        data = []
+        with open(f) as file:
+            csvfile = csv.reader(file)
+            for row in csvfile:
+                data.append(row)
+        return render_template('data.html',data=data)
+
+
+        {% for i in data %}
+    {{ i }}
+{% endfor %}
+
+
+
+@app.route('/about')
+def about():
+    names = ["John","Mary","Wes","Sally"]
+    return render_template("about.html",names=names)
+
+@app.route('/subscribe')
+def subscribe():
+    return render_template("subscribe.html")
+
+@app.route('/form',methods=["POST"])
+def form():
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    email = request.form.get("email")
+    subscribers.append(f"{first_name} {last_name} | {email}")
+    return render_template("form.html",subscribers=subscribers)
+
+
+
+    from app import app
+
+from flask import request, redirect, render_template, url_for, jsonify, make_response, send_from_directory, abort, session
+import pandas as pd
+import secrets, csv, os, zipfile
+
+def allowed_files(filename):
+
+    if not "." in filename:
+        return False
+    ext = filename.rsplit(".", 1)[1]
+    if ext.upper() in app.config["ALLOWED_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
+@app.route('/')
+def index():
+    return render_template("index.html")
+
+@app.route('/uploads/<filename>')
+def uploadFile (filename):
+    return send_from_directory(app.config['FILES'], filename)
+
+# Time Series Tableau
+@app.route('/upload',methods=['GET','POST'])
+def upload():
+    
+    if os.path.isfile('tableau.twb'):
+        os.remove('tableau.twb')
+    if os.path.isfile(os.path.join(app.config["FILES"],'Workbook.twbx')):
+        os.remove(os.path.join(app.config["FILES"],'Workbook.twbx'))
+    if os.path.isfile('TableauData.xlsx'):
+        os.remove('TableauData.xlsx')
+    if request.method == "POST":
+        if request.files:
+            dataFile = request.files["uploadFile"]
+            if allowed_files(dataFile.filename):
+                filename = dataFile.filename
+                dataFile.save(os.path.join(app.config["FILES"], filename))
+                os.rename((app.config['FILES'] + '\\' + filename),'TableauData.xlsx')
+                return redirect(url_for('timeseries'))
+            else:
+                return "That file extension is not allowed"
+    return render_template("upload.html")
+
+@app.route('/settings',methods=['GET','POST'])
+def timeseries():
+    data = pd.read_excel('TableauData.xlsx')
+    form = PastebinEntry()
+    df_string = list(data.select_dtypes('object'))
+    df_string = [""] + df_string    
+    form.language.choices = [(i) for i in df_string]
+    name = df_string
+    df_number = list(data.select_dtypes('number'))
+    df_number = [""] + df_number
+    df_date = list(data.select_dtypes('datetime'))
+    return render_template('timeseries.html',name=name,string=df_string,num=df_number,date=df_date,form=form)
+
+@app.route('/tableau.xml',methods=['POST'])
+def xml():
+    name = request.form.get("name")
+    date = request.form.get("date")
+    titleField = request.form.get("titleField")
+    num1 = request.form.get("num1")
+    num2 = request.form.get("num2")
+    num3 = request.form.get("num3")
+    CountField = list(filter(lambda x: x != "",[num1,num2,num3]))
+    string1 = request.form.get("string1")
+    string2 = request.form.get("string2")
+    string3 = request.form.get("string3")
+    StringField = list(filter(lambda x: x != "",[string1,string2,string3]))
+    currency = request.form.get("currency")
+    template = render_template('tableau.xml',name=name,date=date,currency=currency,CountField=CountField,StringField=StringField,titleField=titleField)
+    response = make_response(template)
+    response.headers['Content-Type'] = 'application/xml'
+    with open('tableau.twb', 'w') as f:
+        f.write(template)
+        f.close()
+    file_list = ['tableau.twb','TableauData.xlsx']
+    with zipfile.ZipFile(os.path.join(app.config["FILES"],'Workbook.twbx'), 'w') as new_zip:
+        for name in file_list:
+            new_zip.write(name)
+    if template:
+        return redirect(url_for('download'))
+    return response
+
+@app.route('/download',methods=['GET','POST'])
+def download():
+    
+    language = request.form.get("language")
+
+    return render_template('download.html',language=language)    
+
+# Marimekko
+@app.route('/upload-mekko',methods=['GET','POST'])
+def upload_mekko():
+    
+    if os.path.isfile('tableau.twb'):
+        os.remove('tableau.twb')
+    if os.path.isfile(os.path.join(app.config["FILES"],'Workbook.twbx')):
+        os.remove(os.path.join(app.config["FILES"],'Workbook.twbx'))
+    if os.path.isfile('TableauMekko.xlsx'):
+        os.remove('TableauMekko.xlsx')
+    if request.method == "POST":
+        if request.files:
+            dataFile = request.files["uploadMekko"]
+            if allowed_files(dataFile.filename):
+                filename = dataFile.filename
+                dataFile.save(os.path.join(app.config["FILES"], filename))                
+                os.rename((app.config['FILES'] + '\\' + filename),'TableauMekko.xlsx')
+                return redirect(url_for('excelMekko'))
+            else:
+                return "That file extension is not allowed"
+    return render_template("upload-mekko.html")
+
+
+@app.route('/settings-mekko',methods=['GET','POST'])
+def excelMekko():
+    data = pd.read_excel('TableauMekko.xlsx')
+    df_string = list(data.select_dtypes('object'))
+    df_string = [""] + df_string
+    name = df_string
+    df_number = list(data.select_dtypes('number'))
+    df_number = [""] + df_number       
+    return render_template('settings-mekko.html',name=name,string=df_string,num=df_number)
+
+@app.route('/tableau-mekko.xml',methods=['POST'])
+def xml_mekko():
+    nameMK = request.form.get("nameMK")
+    numMK = request.form.get("numMK")
+    MKcolumn = request.form.get("MKcolumn")
+    MKstackbar = request.form.get("MKstackbar")
+    template = render_template('marimekko.xml',nameMK=nameMK,numMK=numMK,MKcolumn=MKcolumn,MKstackbar=MKstackbar)
+    response = make_response(template)
+    response.headers['Content-Type'] = 'application/xml'
+    with open('tableau.twb', 'w') as f:
+        f.write(template)
+        f.close()
+    file_list = ['tableau.twb','TableauMekko.xlsx']
+    with zipfile.ZipFile(os.path.join(app.config["FILES"],'Workbook.twbx'), 'w') as new_zip:
+        for name in file_list:
+            new_zip.write(name)
+    if template:
+        return redirect(url_for('download'))
+    return response
+
+
+    @app.route('/settings',methods=['GET','POST'])
+def timeseries():
+    data = pd.read_excel('TableauData.xlsx')
+    form = TimeSeries()
+    string_choices = selectList('df_string','object',data,form)
+    # df_string = list(data.select_dtypes('object'))
+    # df_string = [""] + df_string
+    # for string in form.df_string:
+    #     string.choices = [(i) for i in df_string]
+    
+    df_number = list(data.select_dtypes('number'))
+    
+    name = df_number
+    df_date = list(data.select_dtypes('datetime'))
+    if form.validate_on_submit():
+        return form.df_string.data
+    return render_template('timeseries.html',name=name,num=df_number,date=df_date,form=form)
+
+
+@app.route('/timeseries.xml',methods=['POST'])
+def xml():
+    language = request.form.get("language")
+    name = request.form.get("name")
+    date = request.form.get("date")
+    titleField = request.form.get("titleField")
+    num1 = request.form.get("num1")
+    num2 = request.form.get("num2")
+    num3 = request.form.get("num3")
+    CountField = list(filter(lambda x: x != "",[num1,num2,num3]))
+    string1 = request.form.get("string1")
+    string2 = request.form.get("string2")
+    string3 = request.form.get("string3")
+    StringField = list(filter(lambda x: x != "",[string1,string2,string3]))
+    currency = request.form.get("currency")
+    template = render_template('timeseries2.xml',name=name,date=date,currency=currency,CountField=CountField,StringField=StringField,titleField=titleField,language=language)
+    response = make_response(template)
+    response.headers['Content-Type'] = 'application/xml'
+    with open('tableau.twb', 'w') as f:
+        f.write(template)
+        f.close()
+    file_list = ['tableau.twb','TableauData.xlsx']
+    with zipfile.ZipFile(os.path.join(app.config["FILES"],'Workbook.twbx'), 'w') as new_zip:
+        for name in file_list:
+            new_zip.write(name)
+    if template:
+        return redirect(url_for('download'))
+    return response
+
+    
+# Marimekko
+# @app.route('/upload-mekko',methods=['GET','POST'])
+# def upload_mekko():
+    
+#     if os.path.isfile('tableau.twb'):
+#         os.remove('tableau.twb')
+#     if os.path.isfile(os.path.join(app.config["FILES"],'Workbook.twbx')):
+#         os.remove(os.path.join(app.config["FILES"],'Workbook.twbx'))
+#     if os.path.isfile('TableauMekko.xlsx'):
+#         os.remove('TableauMekko.xlsx')
+#     if request.method == "POST":
+#         if request.files:
+#             dataFile = request.files["uploadMekko"]
+#             if allowed_files(dataFile.filename):
+#                 filename = dataFile.filename
+#                 dataFile.save(os.path.join(app.config["FILES"], filename))                
+#                 os.rename((app.config['FILES'] + '\\' + filename),'TableauMekko.xlsx')
+#                 return redirect(url_for('excelMekko'))
+#             else:
+#                 return "That file extension is not allowed"
+#     return render_template("upload-mekko.html")
+
+
+# @app.route('/settings-mekko',methods=['GET','POST'])
+# def excelMekko():
+#     data = pd.read_excel('TableauMekko.xlsx')
+#     df_string = list(data.select_dtypes('object'))
+#     df_string = [""] + df_string
+#     name = df_string
+#     df_number = list(data.select_dtypes('number'))
+#     df_number = [""] + df_number       
+#     return render_template('settings-mekko.html',name=name,string=df_string,num=df_number)
+
+# @app.route('/tableau-mekko.xml',methods=['POST'])
+# def xml_mekko():
+#     nameMK = request.form.get("nameMK")
+#     numMK = request.form.get("numMK")
+#     MKcolumn = request.form.get("MKcolumn")
+#     MKstackbar = request.form.get("MKstackbar")
+#     template = render_template('marimekko.xml',nameMK=nameMK,numMK=numMK,MKcolumn=MKcolumn,MKstackbar=MKstackbar)
+#     response = make_response(template)
+#     response.headers['Content-Type'] = 'application/xml'
+#     with open('tableau.twb', 'w') as f:
+#         f.write(template)
+#         f.close()
+#     file_list = ['tableau.twb','TableauMekko.xlsx']
+#     with zipfile.ZipFile(os.path.join(app.config["FILES"],'Workbook.twbx'), 'w') as new_zip:
+#         for name in file_list:
+#             new_zip.write(name)
+#     if template:
+#         return redirect(url_for('download'))
+#     return response

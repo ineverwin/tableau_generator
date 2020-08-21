@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20183.18.1128.2033                               -->
+<workbook source-build='2018.3.1 (20183.18.1128.2033)' source-platform='win' upgrade-extracts='false' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='Mekko_Data' inline='true' name='federated.079htap0x8l92i14rrg0t08jvw2p' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='Mekko_Data' name='excel-direct.0rdelwv1wzyo2n1a8wx3s10d8539'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='TableauData.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          </named-connection>
+        </named-connections>
+        <relation connection='excel-direct.0rdelwv1wzyo2n1a8wx3s10d8539' name='Sheet1' table='[Sheet1$]' type='table'>
+        </relation>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='% of Total Aggregator' datatype='real' default-format='p0.00%' name='[Calculation3]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF MIN({INCLUDE : COUNTD([Calculation_2154972431186857985])}) == 1 THEN&#10;    SUM([Calculation_2436728882881736704]) / TOTAL(SUM([Calculation_2436728882881736704]))&#10;ELSE&#10;    1.02&#10;END'>
+          <table-calc ordering-field='[federated.079htap0x8l92i14rrg0t08jvw2p].[Calculation_2154972431186857985]' ordering-type='Field' />
+        </calculation>
+      </column>
+      <column aggregation='Attribute' caption='Aggregator per Column' datatype='integer' name='[Calculation_1228567937119309826]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='{EXCLUDE [Calculation_2154972431186857985]: SUM([Calculation_2436728882881736704])}' />
+      </column>
+      <column caption='# of Aggregrator' datatype='integer' name='[Calculation_1228567937810501641]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF FIRST()==0 THEN &#10;    MIN([Calculation_1228567937119309826])&#10;ELSEIF MIN([Calculation_2154972431186784256]) != LOOKUP(MIN([Calculation_2154972431186784256]),-1) THEN&#10;    PREVIOUS_VALUE(0) + MIN([Calculation_1228567937119309826]) + 0&#10;ELSE&#10;    PREVIOUS_VALUE(0)&#10;END'>
+          <table-calc ordering-type='Rows' />
+        </calculation>
+      </column>
+      <column caption='Row Column' datatype='string' name='[Calculation_2154972431186784256]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='[{{form.df_mkcolumn.data}}]' />
+      </column>
+      <column caption='Column Category' datatype='string' name='[Calculation_2154972431186857985]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='[{{form.df_mkstackbar.data}}]' />
+      </column>
+	  <column caption='Value' datatype='integer' name='[Calculation_2436728882881736704]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='[{{form.df_value.data}}]' />
+      </column>
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column datatype='string' name='[{{form.df_mkstackbar.data}}]' role='dimension' type='nominal' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.437028' measure-ordering='alphabetic' measure-percentage='0.562972' show-aliased-fields='true' show-structure='true' user-set-layout='true' />
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='{{form.df_name.data}}'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Mekko_Data' name='federated.079htap0x8l92i14rrg0t08jvw2p' />
+          </datasources>
+          <datasource-dependencies datasource='federated.079htap0x8l92i14rrg0t08jvw2p'>
+            <column datatype='integer' name='[Calculation_2436728882881736704]' role='measure' type='quantitative' />
+            <column caption='% of Total Aggregator' datatype='real' default-format='p0.00%' name='[Calculation3]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF MIN({INCLUDE : COUNTD([Calculation_2154972431186857985])}) == 1 THEN&#10;    SUM([Calculation_2436728882881736704]) / TOTAL(SUM([Calculation_2436728882881736704]))&#10;ELSE&#10;    1.02&#10;END'>
+                <table-calc ordering-field='[federated.079htap0x8l92i14rrg0t08jvw2p].[Calculation_2154972431186857985]' ordering-type='Field' />
+              </calculation>
+            </column>
+            <column aggregation='Attribute' caption='Aggregator per Column' datatype='integer' name='[Calculation_1228567937119309826]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='{EXCLUDE [Calculation_2154972431186857985]: SUM([Calculation_2436728882881736704])}' />
+            </column>
+            <column caption='# of Aggregrator' datatype='integer' name='[Calculation_1228567937810501641]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF FIRST()==0 THEN &#10;    MIN([Calculation_1228567937119309826])&#10;ELSEIF MIN([Calculation_2154972431186784256]) != LOOKUP(MIN([Calculation_2154972431186784256]),-1) THEN&#10;    PREVIOUS_VALUE(0) + MIN([Calculation_1228567937119309826]) + 0&#10;ELSE&#10;    PREVIOUS_VALUE(0)&#10;END'>
+                <table-calc ordering-type='Rows' />
+              </calculation>
+            </column>
+            <column datatype='string' name='[Calculation_2154972431186784256]' role='dimension' type='nominal' />
+            <column datatype='string' name='[Calculation_2154972431186857985]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_1228567937119309826]' derivation='Attribute' name='[attr:Calculation_1228567937119309826:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_2154972431186784256]' derivation='None' name='[none:Calculation_2154972431186784256:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_2154972431186857985]' derivation='None' name='[none:Calculation_2154972431186857985:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_2436728882881736704]' derivation='Sum' name='[sum:Calculation_2436728882881736704:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation3]' derivation='User' name='[usr:Calculation3:qk:2]' pivot='key' type='quantitative'>
+              <table-calc ordering-field='[federated.079htap0x8l92i14rrg0t08jvw2p].[Calculation_2154972431186857985]' ordering-type='Field' />
+            </column-instance>
+            <column-instance column='[Calculation_1228567937810501641]' derivation='User' name='[usr:Calculation_1228567937810501641:qk:4]' pivot='key' type='quantitative'>
+              <table-calc ordering-type='Field'>
+                <order field='[federated.079htap0x8l92i14rrg0t08jvw2p].[Calculation_2154972431186784256]' />
+                <order field='[federated.079htap0x8l92i14rrg0t08jvw2p].[Calculation_2154972431186857985]' />
+              </table-calc>
+            </column-instance>
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <format attr='render-fold-reversed' value='true' />
+            <encoding attr='space' class='1' field='[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2]' field-type='quantitative' fold='true' scope='rows' synchronized='true' type='space' />
+            <format attr='subtitle' class='1' field='[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2]' scope='rows' value='' />
+            <format attr='auto-subtitle' class='1' field='[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2]' scope='rows' value='true' />
+            <format attr='display' class='0' field='[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation_1228567937810501641:qk:4]' scope='cols' value='false' />
+            <format attr='display' class='1' field='[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2]' scope='rows' value='false' />
+          </style-rule>
+          <style-rule element='refline'>
+            <format attr='fill-above' id='refline0' value='#00000000' />
+            <format attr='fill-below' id='refline0' value='#00000000' />
+          </style-rule>
+          <style-rule element='gridline'>
+            <format attr='line-visibility' scope='cols' value='off' />
+            <format attr='line-visibility' scope='rows' value='off' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='9' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <mark-sizing custom-mark-size-in-axis-units='1.0' mark-alignment='mark-alignment-right' mark-sizing-setting='marks-scaling-on' use-custom-mark-size='false' />
+            <encodings>
+              <size column='[federated.079htap0x8l92i14rrg0t08jvw2p].[attr:Calculation_1228567937119309826:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='cell'>
+                <format attr='text-align' value='center' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='size' value='1.5' />
+                <format attr='mark-labels-show' value='false' />
+                <format attr='has-stroke' value='true' />
+                <format attr='stroke-color' value='#ffffff' />
+                <format attr='mark-transparency' value='255' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='641' />
+                <format attr='maxwidth' value='641' />
+                <format attr='minheight' value='566' />
+                <format attr='maxheight' value='566' />
+                <format attr='aspect' value='0' />
+              </style-rule>
+            </style>
+          </pane>
+          <pane id='10' selection-relaxation-option='selection-relaxation-disallow' y-axis-name='[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2]'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <mark-sizing custom-mark-size-in-axis-units='1.0' mark-alignment='mark-alignment-right' mark-sizing-setting='marks-scaling-on' use-custom-mark-size='false' />
+            <encodings>
+              <color column='[federated.079htap0x8l92i14rrg0t08jvw2p].[none:Calculation_2154972431186857985:nk]' />
+              <size column='[federated.079htap0x8l92i14rrg0t08jvw2p].[attr:Calculation_1228567937119309826:qk]' />
+              <lod column='[federated.079htap0x8l92i14rrg0t08jvw2p].[none:Calculation_2154972431186784256:nk]' />
+              <lod column='[federated.079htap0x8l92i14rrg0t08jvw2p].[sum:Calculation_2436728882881736704:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='cell'>
+                <format attr='text-align' value='center' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='size' value='1.5' />
+                <format attr='mark-labels-show' value='false' />
+                <format attr='has-stroke' value='true' />
+                <format attr='stroke-color' value='#ffffff' />
+                <format attr='mark-transparency' value='255' />
+              </style-rule>
+            </style>
+          </pane>
+          <pane id='11' selection-relaxation-option='selection-relaxation-disallow' y-axis-name='[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2]' y-index='1'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <mark-sizing custom-mark-size-in-axis-units='1.0' mark-alignment='mark-alignment-right' mark-sizing-setting='marks-scaling-on' use-custom-mark-size='false' />
+            <encodings>
+              <size column='[federated.079htap0x8l92i14rrg0t08jvw2p].[attr:Calculation_1228567937119309826:qk]' />
+              <text column='[federated.079htap0x8l92i14rrg0t08jvw2p].[none:Calculation_2154972431186784256:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='cell'>
+                <format attr='text-align' value='center' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='size' value='1.5' />
+                <format attr='has-stroke' value='true' />
+                <format attr='stroke-color' value='#ffffff' />
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-color' value='#ffffff' />
+                <format attr='mark-transparency' value='0' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>([federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2] + [federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation3:qk:2])</rows>
+        <cols>[federated.079htap0x8l92i14rrg0t08jvw2p].[usr:Calculation_1228567937810501641:qk:4]</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+  <windows source-height='30'>
+    <window class='worksheet' maximized='true' name='{{form.df_name.data}}'>
+      <cards>
+        <edge name='left'>
+          <strip size='288'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='10' param='[federated.079htap0x8l92i14rrg0t08jvw2p].[none:Calculation_2154972431186857985:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{26B5C91D-7523-44D2-BA19-8DFECA8EB917}' />
+    </window>
+  </windows>
+</workbook>

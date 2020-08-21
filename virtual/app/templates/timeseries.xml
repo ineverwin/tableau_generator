@@ -1,0 +1,637 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20183.18.1128.2033                               -->
+<workbook original-version='18.1' source-build='2018.3.1 (20183.18.1128.2033)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <SortTagCleanup />
+    <WindowsPersistSimpleIdentifiers />
+    <ZoneBackgroundTransparency />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource hasconnection='false' inline='true' name='Parameters' version='18.1'>
+      <aliases enabled='yes' />
+      <column caption='Date Selection Level' datatype='string' name='[Parameter 1]' param-domain-type='list' role='measure' type='nominal' value='&quot;Year&quot;'>
+        <calculation class='tableau' formula='&quot;Year&quot;' />
+        <members>
+          <member value='&quot;Year&quot;' />
+          <member alias='Year / Month' value='&quot;YearMonth&quot;' />
+          <member alias='Year / Quarter' value='&quot;YearQuarter&quot;' />
+        </members>
+      </column>
+      <column alias='{{form.df_string.data[0]|title}}' caption='Stack Bars' datatype='string' name='[Parameter 2]' param-domain-type='list' role='measure' type='nominal' value='&quot;1&quot;'>        <calculation class='tableau' formula='&quot;1&quot;' />
+        <members>
+            {% for i in form.df_string.data %}{% if i!="" %}
+		        <member alias='{{i|title }}' value='&quot;{{loop.index}}&quot;' />
+            {% endif %}{% endfor %}
+		</members>
+      </column>
+      <column alias='{{form.df_number.data[0]|title}}' caption='Count Value' datatype='string' name='[Parameter 3]' param-domain-type='list' role='measure' type='nominal' value='&quot;1&quot;'>
+        <calculation class='tableau' formula='&quot;1&quot;' />
+        <members>
+            {% for i in form.df_number.data %}{% if i!="" %}
+		        <member alias='{{i|title}}' value='&quot;{{loop.index}}&quot;' />
+            {% endif %}{% endfor %}
+		  </members>
+      </column>
+    </datasource>
+    <datasource caption='TableauData' inline='true' name='federated.0slma8g1m37bdj17q3f560qnrxtb' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='TableauData' name='excel-direct.13jzik90eza8tk1045rrj1e54gme'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='TableauData.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          </named-connection>
+        </named-connections>
+        <relation connection='excel-direct.13jzik90eza8tk1045rrj1e54gme' name='Sheet1' table='[Sheet1$]' type='table'>
+        </relation>
+      </connection>
+      <aliases enabled='yes' />
+      <column-instance column='[Calculation_616993189875818496]' derivation='None' name='[none:Calculation_616993189875818496:nk]' pivot='key' type='nominal' />
+      <column-instance column='[Calculation_693554380025495552]' derivation='None' name='[none:Calculation_693554380025495552:nk]' pivot='key' type='nominal' />
+      <column-instance column='[Calculation_487796167540142080]' derivation='Year' name='[yr:Calculation_487796167540142080:ok]' pivot='key' type='ordinal' />
+      <group caption='Action (Date Selector,YEAR(Date Order Sort),Stack Bar Colors)' hidden='true' name='[Action (Date Selector,YEAR(Date Order Sort),Stack Bar Colors)]' name-style='unqualified' user:auto-column='sheet_link'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[Calculation_1432144714395082753]' />
+          <groupfilter function='level-members' level='[yr:Calculation_487796167540142080:ok]' />
+          <groupfilter function='level-members' level='[Calculation_616993189875818496]' />
+        </groupfilter>
+      </group>
+      <group caption='Action (Stack Bar Colors)' hidden='true' name='[Action (Stack Bar Colors)]' name-style='unqualified' user:auto-column='sheet_link'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[Calculation_616993189875818496]' />
+        </groupfilter>
+      </group>
+      <layout dim-ordering='alphabetic' dim-percentage='0.572402' measure-ordering='alphabetic' measure-percentage='0.315162' parameter-percentage='0.112436' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
+  </datasources>
+  <actions>
+    <action caption='Filter 1 (generated)' name='[Action1]'>
+      <activation auto-clear='true' type='on-select' />
+      <source dashboard='Dashboard 1' type='sheet' worksheet='Legend' />
+      <command command='tsc:tsl-filter'>
+        <param name='exclude' value='Legend,Legend' />
+        <param name='special-fields' value='all' />
+        <param name='target' value='Dashboard 1' />
+      </command>
+    </action>
+    <action caption='Filter 2 (generated)' name='[Action2]'>
+      <activation auto-clear='true' type='on-select' />
+      <source dashboard='Dashboard 1' type='sheet' worksheet='Time Series' />
+      <command command='tsc:tsl-filter'>
+        <param name='exclude' value='Legend' />
+        <param name='special-fields' value='all' />
+        <param name='target' value='Dashboard 1' />
+      </command>
+    </action>
+  </actions>
+  <worksheets>
+  <worksheet name='Data Row'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='TableauData' name='federated.0slma8g1m37bdj17q3f560qnrxtb' />
+            <datasource name='Parameters' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0slma8g1m37bdj17q3f560qnrxtb'>
+            <column-instance column='[{{form.df_title.data}}]' derivation='None' name='[none:{{form.df_title.data}}:nk]' pivot='key' type='nominal' />	
+            <column-instance column='[{{form.df_date.data}}]' derivation='Day-Trunc' name='[tdy:{{form.df_date.data}}:ok]' pivot='key' type='ordinal' />
+			{% for i in form.df_number.data %}{% if i!="" %}<column-instance column='[{{i}}]' derivation='Sum' name='[sum:{{i}}:ok]' pivot='key' type='ordinal' />{% endif %}{% endfor %}
+			{% for i in form.df_string.data %}{% if i!="" %}<column-instance column='[{{i}}]' derivation='None' name='[none:{{i}}:nk]' pivot='key' type='nominal' />{% endif %}{% endfor %}
+			<column-instance column='[Calculation_487796167540142080]' derivation='Year' name='[yr:Calculation_487796167540142080:ok]' pivot='key' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Date Selector,YEAR(Date Order Sort),Stack Bar Colors)]'>
+            <groupfilter function='crossjoin' user:ui-action-filter='[Action2]' user:ui-enumeration='all' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[Calculation_1432144714395082753]' />
+              <groupfilter function='level-members' level='[yr:Calculation_487796167540142080:ok]' />
+              <groupfilter function='level-members' level='[Calculation_616993189875818496]' />
+            </groupfilter>
+          </filter>
+          <filter class='categorical' column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Stack Bar Colors)]'>
+            <groupfilter function='level-members' level='[Calculation_616993189875818496]' user:ui-action-filter='[Action1]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Stack Bar Colors)]</column>
+            <column>[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Date Selector,YEAR(Date Order Sort),Stack Bar Colors)]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <format attr='border-color' value='#b0b0b0' />
+            <format attr='border-width' value='1' />
+          </style-rule>
+          <style-rule element='cell'>
+            <format attr='width' value='5' />
+          </style-rule>
+          <style-rule element='header'>
+            <format attr='width' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:title:nk]' value='244' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='row-levels' value='12' />
+            <format attr='row-horiz-levels' value='12' />
+          </style-rule>
+          <style-rule element='table-div'>
+            <format attr='line-visibility' scope='cols' value='off' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Polygon' />
+            <style>
+              <style-rule element='pane'>
+                <format attr='aspect' value='1' />
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>([federated.0slma8g1m37bdj17q3f560qnrxtb].[none:{{form.df_title.data}}:nk] / ([federated.0slma8g1m37bdj17q3f560qnrxtb].[tdy:{{form.df_date.data}}:ok]
+        {% for i in form.df_number.data %}{% if i!="" %}
+             / ([federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:{{i}}:ok]
+        {% endif %}{% endfor %}
+		{% for i in form.df_string.data %}{% if i!="" %}
+             / ([federated.0slma8g1m37bdj17q3f560qnrxtb].[none:{{i}}:nk]
+		{% endif %}{% endfor %}
+		))
+		{% for i in form.df_number.data %}{% if i!="" %}){% endif %}{% endfor %}
+		{% for i in form.df_string.data %}{% if i!="" %}){% endif %}{% endfor %}
+		</rows>
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name='Legend'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='TableauData' name='federated.0slma8g1m37bdj17q3f560qnrxtb' />
+            <datasource name='Parameters' />
+          </datasources>
+          <filter class='categorical' column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Date Selector,YEAR(Date Order Sort),Stack Bar Colors)]'>
+            <groupfilter function='crossjoin' user:ui-action-filter='[Action2]' user:ui-enumeration='all' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[Calculation_1432144714395082753]' />
+              <groupfilter function='level-members' level='[yr:Calculation_487796167540142080:ok]' />
+              <groupfilter function='level-members' level='[Calculation_616993189875818496]' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Date Selector,YEAR(Date Order Sort),Stack Bar Colors)]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='display-field-labels' scope='rows' value='false' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Square' />
+            <encodings>
+              <color column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]</rows>
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name='Time Series'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='TableauData' name='federated.0slma8g1m37bdj17q3f560qnrxtb' />
+            <datasource name='Parameters' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0slma8g1m37bdj17q3f560qnrxtb'>
+            <column caption='Date Selector' datatype='string' name='[Calculation_1432144714395082753]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='CASE [Parameters].[Parameter 1]&#13;&#10;WHEN &apos;Year&apos; THEN STR(YEAR([Calculation_1432144714401501187]))&#13;&#10;WHEN &apos;YearQuarter&apos; THEN STR(YEAR([Calculation_1432144714401501187])) + &quot; Q&quot; + STR(DATEPART(&apos;quarter&apos;,[Calculation_1432144714401501187]))&#13;&#10;WHEN &apos;YearMonth&apos; THEN LEFT(DATENAME(&apos;month&apos;,[Calculation_1432144714401501187]),3) + &quot; &quot; + STR(YEAR([Calculation_1432144714401501187]))&#13;&#10;END' />
+            </column>
+            <column caption='Date Order' datatype='date' name='[Calculation_1432144714401501187]' role='dimension' type='ordinal'>
+              <calculation class='tableau' formula='{{form.df_date.data}}' />
+            </column>
+            <column caption='Count Selector' datatype='integer' name='[Calculation_3683944535895965696]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='CASE [Parameters].[Parameter 3]&#13;&#10;
+                {% for i in form.df_number.data %}{% if i!="" %}
+                    WHEN &quot;{{loop.index}}&quot; THEN [{{i}}]&#13;&#10;
+                {% endif %}{% endfor %}
+                END'
+              />
+            </column>
+            <column caption='Date Order Sort' datatype='date' name='[Calculation_487796167540142080]' role='dimension' type='ordinal'>
+              <calculation class='tableau' formula='CASE [Parameters].[Parameter 1]&#13;&#10;WHEN &apos;Year&apos; THEN [Date Order (Year)]&#13;&#10;WHEN &apos;YearQuarter&apos; THEN [Date Order (Year) (copy)]&#13;&#10;WHEN &apos;YearMonth&apos; THEN [Date Order (Month)]&#13;&#10;END' />
+            </column>
+            <column caption='Stack Bar Colors' datatype='string' name='[Calculation_616993189875818496]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='IF {FIXED [Calculation_693554380025495552] : SUM([Calculation_3683944535895965696])} / {SUM([Calculation_3683944535895965696])}&#13;&#10;&lt; .01 THEN &apos;Others&apos; ELSE [Calculation_693554380025495552] END' />
+            </column>
+            <column caption='Count Selector Text' datatype='string' name='[Calculation_616993189882523649]' role='measure' type='nominal'>
+              <calculation class='tableau' formula='IF &#13;&#10;SUM([Calculation_3683944535895965696])&gt;1000000000 THEN [Calculation_616993189885526018]+STR(ROUND(SUM([Calculation_3683944535895965696])/1000000000,1))+&quot;B&quot;&#13;&#10;ELSEIF SUM([Calculation_3683944535895965696])&gt;1000000 THEN [Calculation_616993189885526018]+STR(ROUND(SUM([Calculation_3683944535895965696])/1000000,1))+&quot;M&quot;&#13;&#10;ELSEIF SUM([Calculation_3683944535895965696])&gt;1000 THEN [Calculation_616993189885526018]+STR(ROUND(SUM([Calculation_3683944535895965696])/1000,1))+&quot;K&quot;&#13;&#10;ELSE [Calculation_616993189885526018]+STR(ROUND(SUM([Calculation_3683944535895965696]),1))&#13;&#10;END' />
+            </column>
+            <column caption='Currency Character' datatype='string' name='[Calculation_616993189885526018]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='&quot;{{form.df_currency.data}}&quot;' />
+            </column>
+            <column caption='Stack Bar Selector' datatype='string' name='[Calculation_693554380025495552]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='CASE [Parameters].[Parameter 2]&#13;&#10;
+                {% for i in form.df_string.data %}{% if i!="" %}
+                    WHEN &quot;{{loop.index}}&quot; THEN [{{i}}]&#13;&#10;
+                {% endif %}{% endfor %}
+                END' />
+            </column>
+            <column datatype='date' name='[Date Order (Month)]' role='dimension' type='quantitative' user:agg-type='Month-Trunc' user:base-field='Calculation_1432144714401501187' user:ui-builder='date-bin-builder'>
+              <calculation class='tableau' formula='DATE(DATETRUNC(&apos;month&apos;, [Calculation_1432144714401501187]))' />
+            </column>
+            <column caption='Date Order (Quarter)' datatype='date' name='[Date Order (Year) (copy)]' role='dimension' type='quantitative' user:agg-type='Quarter-Trunc' user:base-field='Calculation_1432144714401501187' user:ui-builder='date-bin-builder'>
+              <calculation class='tableau' formula='DATE(DATETRUNC(&apos;quarter&apos;, [Calculation_1432144714401501187]))' scope-isolation='false' />
+            </column>
+            <column datatype='date' name='[Date Order (Year)]' role='dimension' type='quantitative' user:agg-type='Year-Trunc' user:base-field='Calculation_1432144714401501187' user:ui-builder='date-bin-builder'>
+              <calculation class='tableau' formula='DATE(DATETRUNC(&apos;year&apos;, [Calculation_1432144714401501187]))' scope-isolation='false' />
+            </column>
+            <column-instance column='[Calculation_1432144714395082753]' derivation='None' name='[none:Calculation_1432144714395082753:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_616993189875818496]' derivation='None' name='[none:Calculation_616993189875818496:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Date Order (Year)]' derivation='None' name='[none:Date Order (Year):qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_3683944535895965696]' derivation='Sum' name='[sum:Calculation_3683944535895965696:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_616993189882523649]' derivation='User' name='[usr:Calculation_616993189882523649:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_487796167540142080]' derivation='Year' name='[yr:Calculation_487796167540142080:ok]' pivot='key' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Stack Bar Colors)]'>
+            <groupfilter function='level-members' level='[Calculation_616993189875818496]' user:ui-action-filter='[Action1]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <computed-sort column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]' direction='ASC' using='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]' />
+          <filter class='quantitative' column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Date Order (Year):qk]' included-values='in-range'>
+          </filter>
+          <slices>
+            <column>[federated.0slma8g1m37bdj17q3f560qnrxtb].[Action (Stack Bar Colors)]</column>
+            <column>[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Date Order (Year):qk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <format attr='title' class='0' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]' scope='rows' value='AxisName' />
+            <format attr='display' class='0' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]' scope='rows' value='false' />
+            <encoding attr='space' class='1' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]' field-type='quantitative' fold='true' scope='rows' synchronized='true' type='space' />
+            <format attr='display' class='1' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]' scope='rows' value='false' />
+          </style-rule>
+          <style-rule element='cell'>
+            <format attr='text-format' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]' value='c$#,##0.0;($#,##0.0)' />
+          </style-rule>
+          <style-rule element='header'>
+            <format attr='border-style' data-class='total' value='solid' />
+          </style-rule>
+          <style-rule element='label'>
+            <format attr='display' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[yr:Calculation_487796167540142080:ok]' value='false' />
+          </style-rule>
+          <style-rule element='pane'>
+            <format attr='border-style' data-class='total' value='solid' />
+          </style-rule>
+          <style-rule element='worksheet'>
+            <format attr='display-field-labels' scope='cols' value='false' />
+          </style-rule>
+          <style-rule element='gridline'>
+            <format attr='line-visibility' scope='rows' value='off' />
+          </style-rule>
+          <style-rule element='table-div'>
+            <format attr='line-visibility' scope='cols' value='off' />
+            <format attr='line-visibility' scope='rows' value='off' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Date Order (Year):qk]' value='Year Filter'>
+              <formatted-text>
+                <run>Year Filter</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='1' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+          </pane>
+          <pane id='2' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <encodings>
+              <text column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[usr:Calculation_616993189882523649:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='cell'>
+                <format attr='vertical-align' value='top' />
+                <format attr='text-orientation' value='-90' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+          <pane id='3' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk]' y-index='1'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <encodings>
+              <color column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]' />
+              <lod column='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Date Order (Year):qk]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>([federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk] + [federated.0slma8g1m37bdj17q3f560qnrxtb].[sum:Calculation_3683944535895965696:qk])</rows>
+        <cols>([federated.0slma8g1m37bdj17q3f560qnrxtb].[yr:Calculation_487796167540142080:ok] / [federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_1432144714395082753:nk])</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard name='Dashboard 1'>
+      <style />
+      <size maxheight='900' maxwidth='1700' minheight='900' minwidth='1700' sizing-mode='fixed' />
+      <datasources>
+        <datasource name='Parameters' />
+        <datasource caption='TableauData' name='federated.0slma8g1m37bdj17q3f560qnrxtb' />
+      </datasources>
+      
+      <datasource-dependencies datasource='federated.0slma8g1m37bdj17q3f560qnrxtb'>
+        <column datatype='date' name='[Date Order (Year)]' role='dimension' type='quantitative' user:agg-type='Year-Trunc' user:base-field='Calculation_1432144714401501187' user:ui-builder='date-bin-builder'>
+          <calculation class='tableau' formula='DATE(DATETRUNC(&apos;year&apos;, [Calculation_1432144714401501187]))' scope-isolation='false' />
+        </column>
+        <column-instance column='[Date Order (Year)]' derivation='None' name='[none:Date Order (Year):qk]' pivot='key' type='quantitative' />
+      </datasource-dependencies>
+      <zones>
+        <zone h='100000' id='2' type='layout-basic' w='100000' x='0' y='0'>
+          <zone h='71778' id='8' param='horz' type='layout-flow' w='99058' x='471' y='889'>
+            <zone h='71778' id='1' param='vert' type='layout-flow' w='99058' x='471' y='889'>
+              <zone fixed-size='60' h='6667' id='14' is-fixed='true' param='horz' type='layout-flow' w='99058' x='471' y='889'>
+                <zone fixed-size='1057' forceUpdate='true' h='6667' id='3' is-fixed='true' type='text' w='62647' x='471' y='889'>
+                  <formatted-text>
+                    <run fontsize='28'>{{form.df_name.data}} &lt;</run>
+                    <run fontsize='28'>[Parameters].[Parameter 3]</run>
+                    <run fontsize='28'>&gt; by &lt;</run>
+                    <run fontsize='28'>[Parameters].[Parameter 1]</run>
+                    <run fontsize='28'>&gt;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='293' h='6667' id='22' is-fixed='true' name='Time Series' param='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Date Order (Year):qk]' show-null-ctrls='false' show-reldate-picker='false' type='filter' values='relevant' w='17706' x='63118' y='889'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                  </zone-style>
+                </zone>
+                <zone h='6667' id='19' param='vert' type='layout-flow' w='18705' x='80824' y='889'>
+                  <zone fixed-size='2' h='1111' id='20' is-fixed='true' type='empty' w='18705' x='80824' y='889'>
+                    <zone-style>
+                      <format attr='border-color' value='#000000' />
+                      <format attr='border-style' value='none' />
+                      <format attr='border-width' value='0' />
+                      <format attr='margin' value='4' />
+                    </zone-style>
+                  </zone>
+                  <zone fixed-size='42' forceUpdate='' h='5556' id='18' is-fixed='true' param='http://mikecs.net/ftpme/bainlogo.png' type='web' w='18705' x='80824' y='2000'>
+                    <zone-style>
+                      <format attr='border-color' value='#000000' />
+                      <format attr='border-style' value='none' />
+                      <format attr='border-width' value='0' />
+                      <format attr='margin' value='4' />
+                    </zone-style>
+                  </zone>
+                </zone>
+              </zone>
+              <zone fixed-size='12' h='2222' id='4' is-fixed='true' type='empty' w='99058' x='471' y='7556'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                  <format attr='background-color' value='#aa0000' />
+                </zone-style>
+              </zone>
+              <zone h='62889' id='5' param='horz' type='layout-flow' w='99058' x='471' y='9778'>
+                <zone fixed-size='202' h='62889' id='17' is-fixed='true' param='vert' type='layout-flow' w='11882' x='471' y='9778'>
+                  <zone h='3556' id='23' type='text' w='11882' x='471' y='9778'>
+                    <formatted-text>
+                      <run fontsize='14'>Customize Views</run>
+                    </formatted-text>
+                    <zone-style>
+                      <format attr='border-color' value='#000000' />
+                      <format attr='border-style' value='none' />
+                      <format attr='border-width' value='0' />
+                      <format attr='margin' value='4' />
+                    </zone-style>
+                  </zone>
+                  <zone fixed-size='79' h='9667' id='10' is-fixed='true' mode='list' param='[Parameters].[Parameter 1]' type='paramctrl' w='11882' x='471' y='13334'>
+                    <zone-style>
+                      <format attr='border-color' value='#000000' />
+                      <format attr='border-style' value='none' />
+                      <format attr='border-width' value='0' />
+                      <format attr='margin' value='4' />
+                    </zone-style>
+                  </zone>
+                  <zone fixed-size='54' h='6889' id='12' is-fixed='true' mode='compact' param='[Parameters].[Parameter 3]' type='paramctrl' w='11882' x='471' y='23001'>
+                    <zone-style>
+                      <format attr='border-color' value='#000000' />
+                      <format attr='border-style' value='none' />
+                      <format attr='border-width' value='0' />
+                      <format attr='margin' value='4' />
+                    </zone-style>
+                  </zone>
+                  <zone custom-title='true' fixed-size='43' h='5667' id='11' is-fixed='true' mode='compact' param='[Parameters].[Parameter 2]' type='paramctrl' w='11882' x='471' y='29890'>
+                    <formatted-text>
+                      <run>Highlighting</run>
+                    </formatted-text>
+                    <zone-style>
+                      <format attr='border-color' value='#000000' />
+                      <format attr='border-style' value='none' />
+                      <format attr='border-width' value='0' />
+                      <format attr='margin' value='4' />
+                    </zone-style>
+                  </zone>
+                  <zone fixed-size='343' h='37110' id='16' is-fixed='true' name='Legend' show-title='false' w='11882' x='471' y='35557'>
+                    <layout-cache cell-count-w='1' non-cell-size-w='100' type-h='fixed' type-w='cell' />
+                    <zone-style>
+                      <format attr='border-color' value='#000000' />
+                      <format attr='border-style' value='none' />
+                      <format attr='border-width' value='0' />
+                      <format attr='margin' value='4' />
+                    </zone-style>
+                  </zone>
+                </zone>
+                <zone fixed-size='12' h='62889' id='21' is-fixed='true' type='empty' w='1177' x='12353' y='9778'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='background-color' value='#aa0000' />
+                  </zone-style>
+                </zone>
+                <zone h='62889' id='6' name='Time Series' show-title='false' w='85986' x='13530' y='9778'>
+                  <layout-cache cell-count-w='18' minheight='121' type-h='scalable' type-w='cell' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                  </zone-style>
+                </zone>
+              </zone>
+            </zone>
+          </zone>
+          <zone h='26444' id='13' param='horz' type='layout-flow' w='99058' x='471' y='72667'>
+            <zone h='26444' id='15' name='Data Row' w='99058' x='471' y='72667'>
+              <layout-cache cell-count-w='1' fixed-size-h='225924' non-cell-size-w='1142' type-h='fixed' type-w='cell' />
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+      </zones>
+    </dashboard>
+  </dashboards>
+  <windows source-height='30'>
+    <window class='dashboard' maximized='true' name='Dashboard 1'>
+      <viewpoints>
+        <viewpoint name='Data Row'>
+          <zoom type='fit-width' />
+        </viewpoint>
+        <viewpoint name='Legend'>
+          <zoom type='fit-width' />
+        </viewpoint>
+        <viewpoint name='Time Series'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='6' />
+      <simple-id uuid='{E40C5125-CC5A-42C0-B356-DE652533C559}' />
+    </window>
+    <window class='worksheet' name='Time Series'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='compact' param='[Parameters].[Parameter 1]' type='parameter' />
+            <card mode='compact' param='[Parameters].[Parameter 2]' type='parameter' />
+            <card mode='compact' param='[Parameters].[Parameter 3]' type='parameter' />
+            <card pane-specification-id='3' param='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]</field>
+            <field>[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Date Order (Year):qk]</field>
+            <field>[federated.0slma8g1m37bdj17q3f560qnrxtb].[usr:Calculation_616993189882523649:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{AA4832F3-1FB1-460F-8D7A-1C2419C40E4E}' />
+    </window>
+    <window class='worksheet' name='Legend'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0slma8g1m37bdj17q3f560qnrxtb].[none:Calculation_616993189875818496:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{9C236A44-9EE8-47C0-BBEC-7037F638ED4A}' />
+    </window>
+    <window class='worksheet' name='Data Row'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{5254F2C3-B747-4008-A5C1-36766B4D5110}' />
+    </window>
+  </windows>
+</workbook>

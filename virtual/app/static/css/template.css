@@ -1,0 +1,14 @@
+
+.container {margin:0}
+.formWrapper {max-width:860px;}
+
+header {display:block;margin:24px 0;}
+header a {color:black;}
+header img {vertical-align: bottom;margin-right:12px;}
+
+section.menus {margin-bottom:12px;display: block;width:20%;padding:6px;border:1px solid black;}
+section#date {border:none;}
+section p {margin-bottom:6px;}
+section#value, section#stackbar {display: inline-block;margin-right:12px;}
+
+#submit.btn-dark {float:right;margin-right:15px;}
